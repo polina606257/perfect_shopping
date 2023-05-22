@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import styles from "./app.module.css";
+import styles from "./app.module.scss";
 
 function App() {
   return (
