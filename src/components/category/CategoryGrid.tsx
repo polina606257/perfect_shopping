@@ -1,14 +1,13 @@
+import { categories } from "../../model/Caregory";
 import CategoryItem from "./CategoryItem";
 import styles from "./category_grid.module.scss";
 
 function CategoryList() {
   return (
     <section className={styles.category_grid}>
-      <CategoryItem />
-      <CategoryItem />
-      <CategoryItem />
-      <CategoryItem />
-      <CategoryItem />
+      {categories.map((category) => (
+        <CategoryItem category={category} key={category.id} />
+      ))}
     </section>
   );
 }

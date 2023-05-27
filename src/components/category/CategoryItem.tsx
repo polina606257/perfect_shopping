@@ -1,16 +1,17 @@
+import Category from "../../model/Caregory";
 import styles from "./category_item.module.scss";
 
-function CategoryItem() {
+const CategoryItem: React.FC<{ category: Category }> = (props) => {
   return (
     <div className={styles.category_item}>
-      <img src="https://images.ctfassets.net/hrltx12pl8hq/4MFiRr9vFnbWzYoNSPiYXy/fca130dd40da59b06e83ee8d5789a23e/file-converter-shutterstock.jpg" />
+      <img src={props.category.image} />
       <div className={styles.category_content}>
-        <h2 className={styles.category_name}>HAT</h2>
+        <h2 className={styles.category_name}>{props.category.name}</h2>
         <a className={styles.category_link} href="#">
           SHOP NOW
         </a>
       </div>
     </div>
   );
-}
+};
 export default CategoryItem;
