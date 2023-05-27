@@ -1,7 +1,7 @@
-import ShoppingBagIcon from "../icons/shoppingBag";
-import { ReactComponent as CrownIcon } from "../icons/crown.svg";
-import { ReactComponent as MenuIcon } from "../icons/menu.svg";
-import styles from "./appbar.module.scss";
+import { ReactComponent as ShoppingBagIcon } from "../assets/icons/shopping_bag.svg";
+import { ReactComponent as CrownIcon } from "../assets/icons/crown1.svg";
+import { ReactComponent as MenuIcon } from "../assets/icons/menu.svg";
+import "./appbar.styles.scss";
 import { useState } from "react";
 
 function AppBar() {
@@ -13,17 +13,17 @@ function AppBar() {
 
   return (
     <nav>
-      <CrownIcon className={styles.logo} />
+      <CrownIcon className="logo" />
 
-      <div className={styles.nav_container}>
+      <div className="nav_container">
         <NavigationLinks />
 
-        <div className={styles.dropdown_menu}>
-          <MenuIcon className={styles.nav_icon} onClick={toggleMenu} />
+        <div className="dropdown_menu">
+          <MenuIcon className="nav_icon" onClick={toggleMenu} />
           {isMenuOpen && <NavigationLinks />}
         </div>
 
-        <ShoppingBagIcon className={styles.nav_icon} />
+        <ShoppingBagIcon className="nav_icon" />
       </div>
     </nav>
   );
@@ -31,7 +31,7 @@ function AppBar() {
 
 export function NavigationLinks() {
   return (
-    <ul id="myDropdown" className={styles.nav_links}>
+    <ul id="myDropdown" className="nav_links">
       <a href="#">SHOP</a>
       <a href="#">CONTACT</a>
       <a href="#">SIGN IN</a>
