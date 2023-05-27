@@ -1,0 +1,11 @@
+.category_grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 10px;
+  color: dimgray;
+  padding: 0 40px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
