@@ -1,5 +1,5 @@
 import { ReactComponent as ShoppingBagIcon } from "../assets/icons/shopping_bag.svg";
-import { ReactComponent as CrownIcon } from "../assets/icons/crown1.svg";
+import { ReactComponent as CrownIcon } from "../assets/icons/crown.svg";
 import { ReactComponent as MenuIcon } from "../assets/icons/menu.svg";
 import "./appbar.styles.scss";
 import { useState } from "react";

@@ -1,12 +1,13 @@
 import { Fragment } from "react";
 import AppBar from "./components/AppBar";
-import CategoryGrid from "./components/category/CategoryGrid";
+import { createBrowserRouter } from "react-router-dom";
+import Home from "./routes/HomePage";
 
 function App() {
   return (
     <Fragment>
       <AppBar />
-      <CategoryGrid />
+      <Home />
     </Fragment>
   );
 }
