@@ -17,14 +17,14 @@ nav {
 .nav_links {
   padding-right: 32px;
 
-  a {
+  .nav_link {
     font-size: 14px;
     color: dimgray;
     text-decoration: none;
     margin-left: 32px;
   }
 
-  a:hover {
+  .nav_link:hover {
     color: black;
   }
 }
