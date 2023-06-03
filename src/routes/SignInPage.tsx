@@ -1,22 +1,25 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import firebaseApp from "../utils/FirebaseSettings";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
 const provider = new GoogleAuthProvider();
 
 const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential?.accessToken;
-    const user = result.user;
-    // Handle successful sign-in
+    const userRef = doc(db, "users", result.user.uid);
+    const userSnapshot = await getDoc(userRef);
+    if (!userSnapshot.exists()) {
+      await setDoc(userRef, {
+        displayName: result.user.displayName,
+        email: result.user.email,
+        createdAt: new Date(),
+      });
+    }
   } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    const email = error.customData.email;
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // Handle error
+    console.log("error creating user", error.message);
   }
 };
 
