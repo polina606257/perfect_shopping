@@ -1,62 +1,7 @@
-import {
-  getAuth,
-  signInWithPopup,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  User,
-} from "firebase/auth";
-import firebaseApp from "../utils/FirebaseSettings";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
-
-const auth = getAuth(firebaseApp);
-const db = getFirestore(firebaseApp);
-const provider = new GoogleAuthProvider();
-
-const signInWithGoogle = async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    createUserInDB(result.user);
-  } catch (error: any) {
-    console.log("error creating user", error.message);
-  }
-};
-
-const createUserWithMailAndPassword = async (
-  email: string,
-  password: string
-) => {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      createUserInDB(userCredential.user);
-    })
-    .catch((error) => {
-      console.log("error creating user", error.message);
-    });
-};
-
-const signInWithMailAndPassword = async (email: string, password: string) => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {})
-    .catch((error) => {
-      console.log("error login user", error.message);
-    });
-};
+import { signInWithGoogle } from "../utils/auth/sign_in_logic";
 
 const SignIn = () => {
   return <button onClick={signInWithGoogle}>Sign in with google</button>;
-};
-
-const createUserInDB = async (user: User) => {
-  const userRef = doc(db, "users", user.uid);
-  const userSnapshot = await getDoc(userRef);
-  if (!userSnapshot.exists()) {
-    await setDoc(userRef, {
-      displayName: user.displayName,
-      email: user.email,
-      createdAt: new Date(),
-    });
-  }
 };
 
 export default SignIn;
