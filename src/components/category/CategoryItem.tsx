@@ -3,11 +3,11 @@ import "./category_item.styles.scss";
 
 const CategoryItem: React.FC<{ category: Category }> = (props) => {
   return (
-    <div className="category_item">
-      <img src={props.category.image} />
-      <div className="category_content">
-        <h2 className="category_name">{props.category.name}</h2>
-        <a className="category_link" href="#">
+    <div className="category">
+      <img src={props.category.image} alt="shop category" />
+      <div className="content">
+        <h2 className="name">{props.category.name}</h2>
+        <a className="link" href="#">
           SHOP NOW
         </a>
       </div>
