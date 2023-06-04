@@ -5,27 +5,27 @@ nav {
   padding: 18px 40px 10px 40px;
 }
 
-.nav_container {
+.nav-container {
   display: flex;
   align-items: center;
 }
 
-.dropdown_menu {
+.dropdown-menu {
   display: none;
 }
 
-.nav_links {
+.nav-links {
   padding-right: 32px;
 
-  .nav_link {
+  .nav-link {
     font-size: 14px;
     color: dimgray;
     text-decoration: none;
     margin-left: 32px;
-  }
 
-  .nav_link:hover {
-    color: black;
+    &:hover {
+      color: black;
+    }
   }
 }
 
@@ -33,7 +33,7 @@ nav {
   height: 32px;
 }
 
-.nav_icon {
+.nav-icon {
   height: 22px;
 }
 
@@ -42,12 +42,12 @@ nav {
 }
 
 @media (max-width: 490px) {
-  .dropdown_menu {
+  .dropdown-menu {
     position: relative;
     display: inline-block;
   }
 
-  .nav_links {
+  .nav-links {
     position: absolute;
     top: 100%;
     background-color: #f1f1f1;
@@ -63,10 +63,10 @@ nav {
       text-decoration: none;
       display: block;
       margin: 0px 12px;
-    }
 
-    a:hover {
-      background-color: #ddd;
+      &:hover {
+        background-color: #ddd;
+      }
     }
   }
 }
