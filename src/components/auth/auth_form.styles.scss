@@ -1,0 +1,11 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  margin: 50px 30px 50px 0;
+
+  .button-container {
+    display: flex;
+    column-gap: 16px;
+    padding-top: 16px;
+  }
+}

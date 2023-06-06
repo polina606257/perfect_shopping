@@ -1,0 +1,19 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  margin-right: 10px;
+  color: white;
+  background-color: black;
+  border: none;
+  width: 160px;
+}
+
+.sign-with-google-button {
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+  border-top: 2px solid rgb(78, 77, 77);
+  border-left: 2px solid rgb(78, 77, 77);
+  background-color: rgb(24, 95, 176);
+}
