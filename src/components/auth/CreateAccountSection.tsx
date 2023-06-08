@@ -2,9 +2,10 @@ import TitleContent from "./AuthTitleContent";
 import strings from "../../assets/strings/strings";
 import CreateAccountForm from "./CreateAccountForm";
 
-const NoAccountSection = () => {
+const CreateAccountSection: React.FC<{ className?: string }> = (props) => {
+  const createAccountSectionClassName = `create-account-section ${props.className}`;
   return (
-    <section className="no-account-section">
+    <section className={createAccountSectionClassName}>
       <TitleContent
         title={strings.titleNoAccount}
         subTitle={strings.sub_title_no_account}
@@ -14,4 +15,4 @@ const NoAccountSection = () => {
   );
 };
 
-export default NoAccountSection;
+export default CreateAccountSection;

@@ -61,7 +61,9 @@ const CreateAccountForm = () => {
         value={confirmPassword}
         onChange={handleConfirmPasswordChange}
       />
-      <AuthButton text="Sign up" />
+      <div className="button-container">
+        <AuthButton text="Sign up" />
+      </div>
     </div>
   );
 };

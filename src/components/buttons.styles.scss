@@ -7,6 +7,7 @@
   color: white;
   background-color: black;
   border: none;
+  cursor: pointer;
   width: 160px;
 }
 
@@ -16,4 +17,15 @@
   border-top: 2px solid rgb(78, 77, 77);
   border-left: 2px solid rgb(78, 77, 77);
   background-color: rgb(24, 95, 176);
+}
+
+.toggle-button {
+  display: none;
+  background-color: #643f3f;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 900px) {
+    display: block;
+  }
 }

@@ -18,6 +18,10 @@
       width: 300px;
     }
 
+    @media (max-width: 400px) {
+      width: 250px;
+    }
+
     &:focus {
       outline: none;
       background-color: rgb(190, 225, 237);
