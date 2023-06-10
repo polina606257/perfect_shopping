@@ -1,6 +1,5 @@
 import LoginSection from "../components/auth/LoginSection";
 import CreateAccountSection from "../components/auth/CreateAccountSection";
-import { signInWithGoogle } from "../utils/auth/sign_in_logic";
 import "./sign_in_page.styles.scss";
 import { Fragment, useState } from "react";
 import { ToggleButton } from "../components/Buttons";
@@ -31,10 +30,6 @@ const SignInOption = () => {
       />
     </Fragment>
   );
-};
-
-const SignIn = () => {
-  return <button onClick={signInWithGoogle}>Sign in with google</button>;
 };
 
 export default SignInOption;

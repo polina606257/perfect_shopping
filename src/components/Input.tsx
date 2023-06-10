@@ -7,6 +7,7 @@ const Input: React.FC<{
   type: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }> = (props) => {
   return (
     <div className="input-container">
@@ -21,6 +22,7 @@ const Input: React.FC<{
         onChange={props.onChange}
         className="input"
       />
+      {props.error && <div className="error">{props.error}</div>}
     </div>
   );
 };

@@ -1,11 +1,17 @@
 import React from "react";
 import "./buttons.styles.scss";
 
-export const AuthButton: React.FC<{ text: string; className?: string }> = (
-  props
-) => {
+export const AuthButton: React.FC<{
+  text: string;
+  className?: string;
+  onSubmit: (e: React.FormEvent) => void;
+}> = (props) => {
   const buttonClassName = `button ${props.className}`;
-  return <button className={buttonClassName}>{props.text}</button>;
+  return (
+    <button className={buttonClassName} onSubmit={props.onSubmit}>
+      {props.text}
+    </button>
+  );
 };
 
 export const ToggleButton: React.FC<{
