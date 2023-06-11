@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./auth_form.styles.scss";
-import { AuthButton } from "../Buttons";
+import { AuthButton, GoogleSignInButton } from "../Buttons";
 import "../../components/buttons.styles.scss";
 import Input from "../Input";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
@@ -19,6 +19,7 @@ const Form: React.FC = () => {
   };
 
   const signInWithGoogle = async () => {
+    console.log("Sign in with google");
     try {
       const result = await signInWithPopup(auth, provider);
       createUserInDB(result.user);
@@ -58,8 +59,8 @@ const Form: React.FC = () => {
           text="Sign in"
           onSubmit={() => signInWithMailAndPassword(email, password)}
         />
-        <AuthButton
-          onSubmit={signInWithGoogle}
+        <GoogleSignInButton
+          onClick={signInWithGoogle}
           className="sign-with-google-button"
           text="Sign in with Google"
         />

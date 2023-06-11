@@ -14,6 +14,19 @@ export const AuthButton: React.FC<{
   );
 };
 
+export const GoogleSignInButton: React.FC<{
+  text: string;
+  className?: string;
+  onClick: (e: React.FormEvent) => void;
+}> = (props) => {
+  const buttonClassName = `button ${props.className}`;
+  return (
+    <button className={buttonClassName} onClick={props.onClick}>
+      {props.text}
+    </button>
+  );
+};
+
 export const ToggleButton: React.FC<{
   text1: string;
   text2: string;
