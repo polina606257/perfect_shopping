@@ -19,7 +19,6 @@ const Form: React.FC = () => {
   };
 
   const signInWithGoogle = async () => {
-    console.log("Sign in with google");
     try {
       const result = await signInWithPopup(auth, provider);
       createUserInDB(result.user);
