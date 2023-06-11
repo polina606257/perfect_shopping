@@ -29,14 +29,16 @@ const Form: React.FC = () => {
 
   const signInWithMailAndPassword = async (email: string, password: string) => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {})
+      .then((userCredential) => {
+        console.log(userCredential.user);
+      })
       .catch((error) => {
-        console.log("error login user", error.message);
+        alert("Wrong e-mail or password");
       });
   };
 
   return (
-    <div className="form-container">
+    <form className="form-container" onSubmit={(e) => e.preventDefault()}>
       <Input
         htmlFor="email"
         labelName="Email"
@@ -56,7 +58,9 @@ const Form: React.FC = () => {
       <div className="button-container">
         <AuthButton
           text="Sign in"
-          onSubmit={() => signInWithMailAndPassword(email, password)}
+          onSubmit={() => {
+            signInWithMailAndPassword(email, password);
+          }}
         />
         <GoogleSignInButton
           onClick={signInWithGoogle}
@@ -64,7 +68,7 @@ const Form: React.FC = () => {
           text="Sign in with Google"
         />
       </div>
-    </div>
+    </form>
   );
 };
 

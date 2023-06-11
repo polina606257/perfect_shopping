@@ -8,7 +8,7 @@ export const AuthButton: React.FC<{
 }> = (props) => {
   const buttonClassName = `button ${props.className}`;
   return (
-    <button className={buttonClassName} onSubmit={props.onSubmit}>
+    <button className={buttonClassName} onClick={props.onSubmit}>
       {props.text}
     </button>
   );
