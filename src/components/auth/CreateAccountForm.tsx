@@ -2,7 +2,8 @@ import { AuthButton } from "../Buttons";
 import Input from "../Input";
 import "./auth_form.styles.scss";
 import { useState } from "react";
-import { auth, createUserInDB } from "../../utils/auth/sign_in_logic";
+import { createUserInDB } from "../../utils/auth/sign_in";
+import { auth } from "../../utils/auth/firebase_settings";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import strings from "../../assets/strings/strings";
 

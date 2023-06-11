@@ -9,6 +9,7 @@ const strings = {
     "Please enter a valid email address. Example maria@gmail.com",
   password_error: "Password should be at least 6 characters long",
   password_confirm_error: "Passwords do not match",
+  wrong_email_or_password: "Wrong email or password",
 };
 
 export default strings;

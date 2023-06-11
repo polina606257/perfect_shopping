@@ -4,7 +4,9 @@ import { AuthButton, GoogleSignInButton } from "../Buttons";
 import "../../components/buttons.styles.scss";
 import Input from "../Input";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
-import { auth, provider, createUserInDB } from "../../utils/auth/sign_in_logic";
+import { auth, provider } from "../../utils/auth/firebase_settings";
+import { createUserInDB } from "../../utils/auth/sign_in";
+import strings from "../../assets/strings/strings";
 
 const Form: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -33,7 +35,7 @@ const Form: React.FC = () => {
         console.log(userCredential.user);
       })
       .catch((error) => {
-        alert("Wrong e-mail or password");
+        alert(strings.wrong_email_or_password);
       });
   };
 
