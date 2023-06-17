@@ -1,13 +1,14 @@
-import { AuthButton } from "../Buttons";
+import { BaseSignButton } from "../Buttons";
 import Input from "../Input";
 import "./auth_form.styles.scss";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { createUserInDB } from "../../utils/auth/sign_in";
 import { auth } from "../../utils/auth/firebase_settings";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import strings from "../../assets/strings/strings";
+import { useTranslation } from "react-i18next";
 
 const CreateAccountForm = () => {
+  const { t } = useTranslation();
   const [formInput, setFormInput] = useState({
     name: "",
     email: "",
@@ -20,26 +21,22 @@ const CreateAccountForm = () => {
     passwordError: "",
     confirmPasswordError: "",
   });
-  let formIsValid = true;
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormInput((prevInput) => ({ ...prevInput, name: e.target.value }));
-  };
+  const handleError = (fieldName: string, error: string) =>
+    setInputErrors((prevErrors) => ({
+      ...prevErrors,
+      [fieldName]: error,
+    }));
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormInput((prevInput) => ({ ...prevInput, email: e.target.value }));
-  };
+  const formIsValidRef = useRef(true);
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormInput((prevInput) => ({ ...prevInput, password: e.target.value }));
-  };
-
-  const handleConfirmPasswordChange = (
+  const handleChange = (
+    fieldName: string,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setFormInput((prevInput) => ({
       ...prevInput,
-      confirmPassword: e.target.value,
+      [fieldName]: e.target.value,
     }));
   };
 
@@ -57,61 +54,47 @@ const CreateAccountForm = () => {
         createUserInDB(user);
       })
       .catch((error) => {
-        setInputErrors((prevErrors) => ({
-          ...prevErrors,
-          emailError: strings.already_registered_email_error,
-        }));
+        handleError("emailError", t("already_registered_email_error"));
       });
   };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    findErrorsValidatingForm();
-    if (formIsValid) {
+    validateFormAndSubmitIfValid(() => {
       createUserWithMailAndPassword(formInput.email, formInput.password);
-    }
+    });
   };
 
-  const findErrorsValidatingForm = () => {
+  const validateFormAndSubmitIfValid = (submit: () => void) => {
     setInputErrors({
       nameError: "",
       emailError: "",
       passwordError: "",
       confirmPasswordError: "",
     });
+    formIsValidRef.current = true;
 
     if (formInput.name.length < 2) {
-      setInputErrors((prevErrors) => ({
-        ...prevErrors,
-        nameError: strings.name_error,
-      }));
-      formIsValid = false;
+      handleError("nameError", t("name_error"));
+      formIsValidRef.current = false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formInput.email)) {
-      setInputErrors((prevErrors) => ({
-        ...prevErrors,
-        emailError: strings.wrong_email_error,
-      }));
-      formIsValid = false;
+      handleError("emailError", t("wrong_email_error"));
+      formIsValidRef.current = false;
     }
 
     if (formInput.password.length < 6) {
-      setInputErrors((prevErrors) => ({
-        ...prevErrors,
-        passwordError: strings.password_error,
-      }));
-      formIsValid = false;
+      handleError("passwordError", t("password_error"));
+      formIsValidRef.current = false;
     }
 
     if (formInput.confirmPassword !== formInput.password) {
-      setInputErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPasswordError: strings.password_confirm_error,
-      }));
-      formIsValid = false;
+      handleError("confirmPasswordError", t("password_confirm_error"));
+      formIsValidRef.current = false;
     }
+    if (formIsValidRef.current) submit();
   };
 
   return (
@@ -122,7 +105,7 @@ const CreateAccountForm = () => {
         id="name"
         type="text"
         value={formInput.name}
-        onChange={handleNameChange}
+        onChange={(e) => handleChange("name", e)}
         error={inputErrors.nameError}
       />
       <Input
@@ -131,7 +114,7 @@ const CreateAccountForm = () => {
         id="email"
         type="email"
         value={formInput.email}
-        onChange={handleEmailChange}
+        onChange={(e) => handleChange("email", e)}
         error={inputErrors.emailError}
       />
       <Input
@@ -140,7 +123,7 @@ const CreateAccountForm = () => {
         id="password"
         type="password"
         value={formInput.password}
-        onChange={handlePasswordChange}
+        onChange={(e) => handleChange("password", e)}
         error={inputErrors.passwordError}
       />
       <Input
@@ -149,11 +132,11 @@ const CreateAccountForm = () => {
         id="confirm-password"
         type="password"
         value={formInput.confirmPassword}
-        onChange={handleConfirmPasswordChange}
+        onChange={(e) => handleChange("confirmPassword", e)}
         error={inputErrors.confirmPasswordError}
       />
       <div className="button-container">
-        <AuthButton onSubmit={onSubmit} text="Sign up" />
+        <BaseSignButton onClick={onSubmit} text="Sign up" />
       </div>
     </form>
   );

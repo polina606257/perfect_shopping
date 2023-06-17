@@ -4,7 +4,7 @@ import "./sign_in_page.styles.scss";
 import { Fragment, useState } from "react";
 import { ToggleButton } from "../components/Buttons";
 
-const SignInOption = () => {
+const SignInOptions = () => {
   const [showCreateAccount, setShowCreateAccount] = useState(false);
 
   const toggleCreateAccountSection = () => {
@@ -32,4 +32,4 @@ const SignInOption = () => {
   );
 };
 
-export default SignInOption;
+export default SignInOptions;

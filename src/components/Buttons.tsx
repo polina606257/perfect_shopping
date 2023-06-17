@@ -1,20 +1,7 @@
 import React from "react";
 import "./buttons.styles.scss";
 
-export const AuthButton: React.FC<{
-  text: string;
-  className?: string;
-  onSubmit: (e: React.FormEvent) => void;
-}> = (props) => {
-  const buttonClassName = `button ${props.className}`;
-  return (
-    <button className={buttonClassName} onClick={props.onSubmit}>
-      {props.text}
-    </button>
-  );
-};
-
-export const GoogleSignInButton: React.FC<{
+export const BaseSignButton: React.FC<{
   text: string;
   className?: string;
   onClick: (e: React.FormEvent) => void;

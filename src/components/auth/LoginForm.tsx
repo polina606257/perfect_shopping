@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import "./auth_form.styles.scss";
-import { AuthButton, GoogleSignInButton } from "../Buttons";
 import "../../components/buttons.styles.scss";
 import Input from "../Input";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, provider } from "../../utils/auth/firebase_settings";
 import { createUserInDB } from "../../utils/auth/sign_in";
-import strings from "../../assets/strings/strings";
+import { useTranslation } from "react-i18next";
+import { BaseSignButton } from "../Buttons";
 
 const Form: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { t } = useTranslation();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -35,7 +36,7 @@ const Form: React.FC = () => {
         console.log(userCredential.user);
       })
       .catch((error) => {
-        alert(strings.wrong_email_or_password);
+        alert(t("wrong_email_or_password"));
       });
   };
 
@@ -58,13 +59,13 @@ const Form: React.FC = () => {
         onChange={handlePasswordChange}
       />
       <div className="button-container">
-        <AuthButton
+        <BaseSignButton
           text="Sign in"
-          onSubmit={() => {
+          onClick={() => {
             signInWithMailAndPassword(email, password);
           }}
         />
-        <GoogleSignInButton
+        <BaseSignButton
           onClick={signInWithGoogle}
           className="sign-with-google-button"
           text="Sign in with Google"

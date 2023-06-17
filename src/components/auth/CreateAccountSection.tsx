@@ -1,14 +1,16 @@
 import TitleContent from "./AuthTitleContent";
-import strings from "../../assets/strings/strings";
+import { useTranslation } from "react-i18next";
 import CreateAccountForm from "./CreateAccountForm";
 
 const CreateAccountSection: React.FC<{ className?: string }> = (props) => {
   const createAccountSectionClassName = `create-account-section ${props.className}`;
+  const { t } = useTranslation();
+
   return (
     <section className={createAccountSectionClassName}>
       <TitleContent
-        title={strings.titleNoAccount}
-        subTitle={strings.sub_title_no_account}
+        title={t("title_no_account")}
+        subTitle={t("sub_title_no_account")}
       />
       <CreateAccountForm />
     </section>
