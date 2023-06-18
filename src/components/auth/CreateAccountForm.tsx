@@ -30,6 +30,53 @@ const CreateAccountForm = () => {
 
   const formIsValidRef = useRef(true);
 
+  const inputsConfig = {
+    name: {
+      htmlFor: "name",
+      labelName: "Display name",
+      id: "name",
+      type: "text",
+      value: () => formInput.name,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+        handleChange("name", e),
+      validator: (value: string) => value.length >= 2,
+      errorText: t("name_error"),
+    },
+    email: {
+      htmlFor: "email",
+      labelName: "Email",
+      id: "email",
+      type: "email",
+      value: () => formInput.email,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+        handleChange("email", e),
+      validator: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      errorText: t("wrong_email_error"),
+    },
+    password: {
+      htmlFor: "password",
+      labelName: "Password",
+      id: "password",
+      type: "password",
+      value: () => formInput.password,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+        handleChange("password", e),
+      validator: (value: string) => value.length >= 6,
+      errorText: t("password_error"),
+    },
+    confirmPassword: {
+      htmlFor: "confirm-password",
+      labelName: "Confirm password",
+      id: "confirm-password",
+      type: "password",
+      value: () => formInput.confirmPassword,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+        handleChange("confirmPassword", e),
+      validator: (value: string) => value === formInput.password,
+      errorText: t("password_confirm_error"),
+    },
+  };
+
   const handleChange = (
     fieldName: string,
     e: React.ChangeEvent<HTMLInputElement>
@@ -74,67 +121,40 @@ const CreateAccountForm = () => {
     });
     formIsValidRef.current = true;
 
-    if (formInput.name.length < 2) {
-      handleError("nameError", t("name_error"));
-      formIsValidRef.current = false;
-    }
+    Object.entries(inputsConfig).forEach(([fieldName, config]) => {
+      const { validator, errorText } = config;
+      const fieldValue = formInput[fieldName as keyof typeof formInput];
+      let isValid = true;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formInput.email)) {
-      handleError("emailError", t("wrong_email_error"));
-      formIsValidRef.current = false;
-    }
+      if (typeof validator === "function") {
+        isValid = validator(fieldValue);
+      } else if (validator instanceof RegExp) {
+        isValid = validator.test(fieldValue);
+      }
 
-    if (formInput.password.length < 6) {
-      handleError("passwordError", t("password_error"));
-      formIsValidRef.current = false;
-    }
+      if (!isValid) {
+        handleError(`${fieldName}Error`, errorText);
+        formIsValidRef.current = false;
+      }
+    });
 
-    if (formInput.confirmPassword !== formInput.password) {
-      handleError("confirmPasswordError", t("password_confirm_error"));
-      formIsValidRef.current = false;
-    }
     if (formIsValidRef.current) submit();
   };
 
   return (
     <form className="form-container" onSubmit={onSubmit}>
-      <Input
-        htmlFor="name"
-        labelName="Display name"
-        id="name"
-        type="text"
-        value={formInput.name}
-        onChange={(e) => handleChange("name", e)}
-        error={inputErrors.nameError}
-      />
-      <Input
-        htmlFor="email"
-        labelName="Email"
-        id="email"
-        type="email"
-        value={formInput.email}
-        onChange={(e) => handleChange("email", e)}
-        error={inputErrors.emailError}
-      />
-      <Input
-        htmlFor="password"
-        labelName="Password"
-        id="password"
-        type="password"
-        value={formInput.password}
-        onChange={(e) => handleChange("password", e)}
-        error={inputErrors.passwordError}
-      />
-      <Input
-        htmlFor="confirm-password"
-        labelName="Confirm password"
-        id="confirm-password"
-        type="password"
-        value={formInput.confirmPassword}
-        onChange={(e) => handleChange("confirmPassword", e)}
-        error={inputErrors.confirmPasswordError}
-      />
+      {Object.entries(inputsConfig).map(([fieldName, config]) => (
+        <Input
+          key={fieldName}
+          htmlFor={config.htmlFor}
+          labelName={config.labelName}
+          id={config.id}
+          type={config.type}
+          value={config.value()}
+          onChange={config.onChange}
+          error={inputErrors[`${fieldName}Error` as keyof typeof inputErrors]}
+        />
+      ))}
       <div className="button-container">
         <BaseSignButton onClick={onSubmit} text="Sign up" />
       </div>
