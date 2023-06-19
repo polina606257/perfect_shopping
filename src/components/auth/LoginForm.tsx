@@ -45,7 +45,6 @@ const Form: React.FC = () => {
       <Input
         htmlFor="email"
         labelName="Email"
-        id="email"
         type="email"
         value={email}
         onChange={handleEmailChange}
@@ -53,7 +52,6 @@ const Form: React.FC = () => {
       <Input
         htmlFor="password"
         labelName="Password"
-        id="password"
         type="password"
         value={password}
         onChange={handlePasswordChange}

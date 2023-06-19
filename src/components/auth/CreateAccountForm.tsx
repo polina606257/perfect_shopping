@@ -32,48 +32,28 @@ const CreateAccountForm = () => {
 
   const inputsConfig = {
     name: {
-      htmlFor: "name",
+      key: "name",
       labelName: "Display name",
-      id: "name",
       type: "text",
-      value: () => formInput.name,
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-        handleChange("name", e),
       validator: (value: string) => value.length >= 2,
-      errorText: t("name_error"),
     },
     email: {
-      htmlFor: "email",
+      key: "email",
       labelName: "Email",
-      id: "email",
       type: "email",
-      value: () => formInput.email,
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-        handleChange("email", e),
-      validator: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      errorText: t("wrong_email_error"),
+      validator: (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
     },
     password: {
-      htmlFor: "password",
+      key: "password",
       labelName: "Password",
-      id: "password",
       type: "password",
-      value: () => formInput.password,
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-        handleChange("password", e),
       validator: (value: string) => value.length >= 6,
-      errorText: t("password_error"),
     },
     confirmPassword: {
-      htmlFor: "confirm-password",
+      key: "confirm_password",
       labelName: "Confirm password",
-      id: "confirm-password",
       type: "password",
-      value: () => formInput.confirmPassword,
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-        handleChange("confirmPassword", e),
       validator: (value: string) => value === formInput.password,
-      errorText: t("password_confirm_error"),
     },
   };
 
@@ -122,17 +102,11 @@ const CreateAccountForm = () => {
     formIsValidRef.current = true;
 
     Object.entries(inputsConfig).forEach(([fieldName, config]) => {
-      const { validator, errorText } = config;
+      const errorText = t(`${fieldName}_error`);
+      const { validator } = config;
       const fieldValue = formInput[fieldName as keyof typeof formInput];
-      let isValid = true;
 
-      if (typeof validator === "function") {
-        isValid = validator(fieldValue);
-      } else if (validator instanceof RegExp) {
-        isValid = validator.test(fieldValue);
-      }
-
-      if (!isValid) {
+      if (!validator(fieldValue)) {
         handleError(`${fieldName}Error`, errorText);
         formIsValidRef.current = false;
       }
@@ -146,12 +120,13 @@ const CreateAccountForm = () => {
       {Object.entries(inputsConfig).map(([fieldName, config]) => (
         <Input
           key={fieldName}
-          htmlFor={config.htmlFor}
+          htmlFor={config.key}
           labelName={config.labelName}
-          id={config.id}
           type={config.type}
-          value={config.value()}
-          onChange={config.onChange}
+          value={formInput[config.key as keyof typeof formInput]}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleChange(fieldName, e)
+          }
           error={inputErrors[`${fieldName}Error` as keyof typeof inputErrors]}
         />
       ))}
