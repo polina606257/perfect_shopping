@@ -1,0 +1,20 @@
+.sign-in-container {
+  display: flex;
+  justify-content: center;
+  column-gap: 80px;
+  padding: 20px 40px;
+
+  @media (max-width: 900px) {
+    .create-account-section {
+      display: none;
+    }
+
+    .show-section {
+      display: block;
+    }
+
+    .hide-section {
+      display: none;
+    }
+  }
+}
